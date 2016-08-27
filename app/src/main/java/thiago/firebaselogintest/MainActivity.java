@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -19,7 +21,6 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthCredential;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 public class MainActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
@@ -45,9 +46,16 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.O
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
+                TextView textView = (TextView) findViewById(R.id.user_logged);
+                ViewGroup layout = (ViewGroup) findViewById(R.id.activity_main);
+
                 if (user != null){
+
+                    textView.setText("Welcome " + user.getDisplayName());
+
                     Log.d("AUTH", "User logged in: " + user.getEmail());
                 }else {
+                    textView.setText("User logged out.");
                     Log.d("AUTH", "User logged out.");
                 }
             }
